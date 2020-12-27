@@ -3,12 +3,13 @@ This repo contains the front end code for the ImmiQ Web App. ImmiQ is a place to
 
 ## Installation Steps
 
-git clone https://github.com/ImmigrationQueries/ImmiQSpa.git
-cd ImmiQSpa
-npm install
+- git clone https://github.com/ImmigrationQueries/ImmiQSpa.git
+- cd ImmiQSpa
+- npm install
 
 
 ## Contribution Instruction
+
 
 ## Features already added
 
@@ -19,3 +20,6 @@ This Skeleton comes with extra development features such as:
 -   Prettier for formatting
 -   VSCode editor settings (Change to suit your development needs)
 
+## Features to be added
+
+- Precommit husky
