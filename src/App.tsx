@@ -1,8 +1,10 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React from 'react';
+import logo from './logo.svg';
+import './App.css';
+import 'firebaseui/dist/firebaseui.css';
 
-function App() {
+const App = () => {
+
     return (
         <div className="App">
             <header className="App-header">
@@ -18,9 +20,10 @@ function App() {
                 >
                     Learn React
                 </a>
+                <div id="firebaseui-auth-container"></div>
             </header>
         </div>
     );
-}
+};
 
 export default App;
