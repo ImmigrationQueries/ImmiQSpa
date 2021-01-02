@@ -10,8 +10,6 @@ For development, you will only need Node.js installed on your environement.
 
 - Just go on official Node.js website & grab the installer. Also, be sure to have git available in your PATH, npm might need it.
 
-
-
 ## Installation Steps
 
 - git clone https://github.com/ImmigrationQueries/ImmiQSpa.git
@@ -29,7 +27,7 @@ For development, you will only need Node.js installed on your environement.
 ## Contribution Instruction
 
 - Create new branch from your code editor
--   git checkout <branch>
+git checkout -b <branch> <remote>/<branch>
 - Submit a pull request or a draft pull request in Github and assign it to the senior dev to check and approve.
 
 ## Features already added
