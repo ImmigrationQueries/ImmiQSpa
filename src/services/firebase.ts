@@ -27,5 +27,5 @@ const fb = firebase.initializeApp(config);
 //     fb.auth().useEmulator('http://localhost:9099');
 // }
 
-export const fbAuth = fb.auth();
-export default firebase;
+const fbAuth = fb.auth();
+export { fbAuth, firebase };
