@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 interface Config {
@@ -21,10 +21,11 @@ const config: Config = {
     measurementId: 'G-Z50Q6RKS12',
 };
 
-const firebaseApp = firebase.default.initializeApp(config);
+const fb = firebase.initializeApp(config);
 
-if (window.location.hostname === 'localhost') {
-    firebaseApp.auth().useEmulator('http://localhost:9099');
-}
+// if (window.location.hostname === 'localhost') {
+//     fb.auth().useEmulator('http://localhost:9099');
+// }
 
-export default firebaseApp;
+export const fbAuth = fb.auth();
+export default firebase;
