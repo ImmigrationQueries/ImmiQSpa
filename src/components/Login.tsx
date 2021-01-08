@@ -97,8 +97,8 @@ const Login = () => {
                     <Avatar className={classes.avatar}>
                         <LockOutlined color="primary" />
                     </Avatar>
-                    <Typography component="h1" variant="h5" color="primary" gutterBottom>
-                        Sign In
+                    <Typography component="h1" variant="subtitle1" color="primary" gutterBottom>
+                        To gain access to your Dashboard
                     </Typography>
                     <Button
                         sx={{ margin: '20px 0px 10px 0px' }}
@@ -110,7 +110,7 @@ const Login = () => {
                         startIcon={<Google color="primary" />}
                         size="medium"
                     >
-                        Sign in with Google
+                        Log in with Google
                     </Button>
                     <Button
                         className={classes.button}
@@ -121,13 +121,13 @@ const Login = () => {
                         startIcon={<Facebook color="primary" />}
                         size="medium"
                     >
-                        Sign in with Facebook
+                        Log in with Facebook
                     </Button>
 
                     <form className={classes.form} noValidate>
                         <Divider textAlign="center">
                             <Typography color="textSecondary">
-                                Or Sign in using your ImmiQ account
+                                Or Log in using your ImmiQ account
                             </Typography>{' '}
                         </Divider>
                         <TextField
@@ -157,7 +157,7 @@ const Login = () => {
                             variant="contained"
                             color="primary"
                         >
-                            Sign In
+                            Log In
                         </Button>
 
                         <Grid container>
@@ -168,7 +168,7 @@ const Login = () => {
                             </Grid>
                             <Grid item>
                                 <Link component={ReactLink} to={'/signup'} variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    No account yet? Create here
                                 </Link>
                             </Grid>
                         </Grid>

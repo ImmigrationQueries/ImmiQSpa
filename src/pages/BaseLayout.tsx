@@ -25,7 +25,7 @@ const BaseLayout = () => {
                         Login
                     </Button>
                     <Button color="inherit" component={ReactLink} to={'/signup'}>
-                        SignUp
+                        Create Account
                     </Button>
                 </Toolbar>
             </AppBar>

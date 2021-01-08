@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link as ReactLink } from 'react-router-dom';
+import { fbAuth, firebase } from '../services/firebase';
 import {
     Avatar,
     Button,
@@ -13,6 +14,7 @@ import {
 import { LockOutlined, Facebook, Google } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import Copyright from './Copyright';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -45,6 +47,41 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
     const classes = useStyles();
+    const history = useHistory();
+
+    const googleLogin = async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        await fbAuth.signInWithPopup(provider).then(
+            async (result) => {
+                const token = await fbAuth?.currentUser?.getIdToken(true);
+                if (token) {
+                    localStorage.setItem('@token', token);
+                    history.push('/dashboard');
+                }
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    };
+
+    const facebookLogin = async () => {
+        const provider = new firebase.auth.FacebookAuthProvider();
+
+        await fbAuth.signInWithPopup(provider).then(
+            async (result) => {
+                const token = await fbAuth?.currentUser?.getIdToken(true);
+                if (token) {
+                    localStorage.setItem('@token', token);
+                    history.push('/dashboard');
+                }
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -54,9 +91,10 @@ const Signup = () => {
                     <LockOutlined color="primary" />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Create Account
                 </Typography>
                 <Button
+                    onClick={facebookLogin}
                     sx={{ margin: '20px 0px 10px 0px' }}
                     type="submit"
                     fullWidth
@@ -67,6 +105,7 @@ const Signup = () => {
                     Sign in with Google
                 </Button>
                 <Button
+                    onClick={googleLogin}
                     type="submit"
                     fullWidth
                     variant="outlined"
@@ -137,12 +176,12 @@ const Signup = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Create Account
                     </Button>
                     <Grid container>
                         <Grid item>
                             <Link component={ReactLink} to={'/login'} variant="body2">
-                                Already have an account? Sign in
+                                Already have an account? Log in
                             </Link>
                         </Grid>
                     </Grid>
