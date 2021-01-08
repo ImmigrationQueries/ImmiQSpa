@@ -1,26 +1,27 @@
+import { Fragment } from 'react';
+import { Link as ReactLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { fbAuth, firebase } from '../services/firebase';
 
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import GoogleIcon from '@material-ui/icons/Google';
+import Copyright from '../components/Copyright';
+import { LockOutlined, Facebook, Google } from '@material-ui/icons';
 import {
     Avatar,
-    Box,
     makeStyles,
     Container,
     Divider,
     Button,
-    CssBaseline,
     TextField,
     Grid,
     Link,
     Typography,
 } from '@material-ui/core';
-import { Fragment } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
+    container: {
+        marginTop: theme.spacing(5),
+    },
     paper: {
         boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
         margin: theme.spacing(2),
@@ -90,11 +91,11 @@ const Login = () => {
 
     return (
         <Fragment>
-            <Container maxWidth="xs">
+            <Container className={classes.container} maxWidth="xs">
                 <div className={classes.toolbar} />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon color="primary" />
+                        <LockOutlined color="primary" />
                     </Avatar>
                     <Typography component="h1" variant="h5" color="primary" gutterBottom>
                         Sign In
@@ -106,7 +107,7 @@ const Login = () => {
                         type="submit"
                         fullWidth
                         variant="outlined"
-                        startIcon={<GoogleIcon color="primary" />}
+                        startIcon={<Google color="primary" />}
                         size="medium"
                     >
                         Sign in with Google
@@ -117,7 +118,7 @@ const Login = () => {
                         type="submit"
                         fullWidth
                         variant="outlined"
-                        startIcon={<FacebookIcon color="primary" />}
+                        startIcon={<Facebook color="primary" />}
                         size="medium"
                     >
                         Sign in with Facebook
@@ -166,7 +167,7 @@ const Login = () => {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link component={ReactLink} to={'/signup'} variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
@@ -174,6 +175,7 @@ const Login = () => {
                     </form>
                 </div>
             </Container>
+            <Copyright />
         </Fragment>
     );
 };

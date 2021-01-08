@@ -1,5 +1,6 @@
 import { AppBar, Button, CssBaseline, Toolbar, Typography, makeStyles } from '@material-ui/core';
 import { Fragment } from 'react';
+import { Link as ReactLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -20,8 +21,12 @@ const BaseLayout = () => {
                     <Typography variant="h6" className={classes.title}>
                         ImmiQ
                     </Typography>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">SignUp</Button>
+                    <Button color="inherit" component={ReactLink} to={'/login'}>
+                        Login
+                    </Button>
+                    <Button color="inherit" component={ReactLink} to={'/signup'}>
+                        SignUp
+                    </Button>
                 </Toolbar>
             </AppBar>
         </Fragment>

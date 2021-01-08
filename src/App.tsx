@@ -4,7 +4,8 @@ import './App.css';
 
 import BaseLayout from './pages/BaseLayout';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import Signup from './components/Signup';
+import Dashboard from './pages/Dashboard';
 import { Fade } from '@material-ui/core';
 
 const App = () => {
@@ -16,6 +17,9 @@ const App = () => {
                     <Switch>
                         <Route path={'/login'}>
                             <Login />
+                        </Route>
+                        <Route path={'/signup'}>
+                            <Signup />
                         </Route>
                         <Route path={'/dashboard'}>
                             <Dashboard />
