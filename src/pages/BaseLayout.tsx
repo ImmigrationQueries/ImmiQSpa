@@ -1,4 +1,5 @@
-import { AppBar, Button, Toolbar, Typography, makeStyles } from '@material-ui/core';
+import { AppBar, Button, CssBaseline, Toolbar, Typography, makeStyles } from '@material-ui/core';
+import { Fragment } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -12,8 +13,9 @@ const useStyles = makeStyles((theme) => ({
 const BaseLayout = () => {
     const classes = useStyles();
     return (
-        <div>
-            <AppBar position="absolute">
+        <Fragment>
+            <CssBaseline />
+            <AppBar position="fixed">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         ImmiQ
@@ -22,7 +24,7 @@ const BaseLayout = () => {
                     <Button color="inherit">SignUp</Button>
                 </Toolbar>
             </AppBar>
-        </div>
+        </Fragment>
     );
 };
 

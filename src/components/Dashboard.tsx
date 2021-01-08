@@ -12,7 +12,7 @@ const Dashboard = () => {
         const loadSongs = async () => {
             const request = await fetch('http://localhost:3040/songs', {
                 headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('@token'),
+                    Authorization: 'Authorization ' + localStorage.getItem('@token'),
                 },
             });
 

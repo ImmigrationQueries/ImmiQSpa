@@ -20,14 +20,9 @@ import {
 import { Fragment } from 'react';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        ...theme.typography.body2,
-        '& > * + *': {
-            marginTop: theme.spacing(2),
-        },
-    },
+    toolbar: theme.mixins.toolbar,
     paper: {
+        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
         margin: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
@@ -45,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
     },
     button: {
-        margin: theme.spacing(2),
+        margin: theme.spacing(2, 0),
     },
     icon: {
         alignItems: 'left',
@@ -95,8 +90,8 @@ const Login = () => {
 
     return (
         <Fragment>
-            <Container className={classes.root} component="main" maxWidth="xs">
-                <CssBaseline />
+            <Container maxWidth="xs">
+                <div className={classes.toolbar} />
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon color="primary" />
@@ -105,25 +100,23 @@ const Login = () => {
                         Sign In
                     </Typography>
                     <Button
+                        sx={{ margin: '20px 0px 10px 0px' }}
                         className={classes.button}
-                        color="inherit"
                         onClick={googleLogin}
                         type="submit"
                         fullWidth
-                        variant="contained"
+                        variant="outlined"
                         startIcon={<GoogleIcon color="primary" />}
                         size="medium"
                     >
                         Sign in with Google
                     </Button>
-                    <Divider className={classes.space} />
                     <Button
                         className={classes.button}
-                        color="inherit"
                         onClick={facebookLogin}
                         type="submit"
                         fullWidth
-                        variant="contained"
+                        variant="outlined"
                         startIcon={<FacebookIcon color="primary" />}
                         size="medium"
                     >
@@ -145,7 +138,6 @@ const Login = () => {
                             name="email"
                             autoComplete="email"
                         />
-                        <Box></Box>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -157,6 +149,7 @@ const Login = () => {
                             autoComplete="current-password"
                         />
                         <Button
+                            sx={{ margin: '20px 0px 10px 0px' }}
                             classes={{ root: classes.button }}
                             type="submit"
                             fullWidth
@@ -165,6 +158,7 @@ const Login = () => {
                         >
                             Sign In
                         </Button>
+
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
