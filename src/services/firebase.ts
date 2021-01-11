@@ -27,5 +27,46 @@ const fb = firebase.initializeApp(config);
 //     fb.auth().useEmulator('http://localhost:9099');
 // }
 
+const googleLogin = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    await fbAuth.signInWithPopup(provider).then(
+        async (result) => {
+            fbAuth.onAuthStateChanged((user) => {
+                if (user) {
+                    user.getIdToken()
+                        .then((token) => {
+                            localStorage.setItem('@token', token);
+                        })
+                        .catch((error) => {
+                            console.log(
+                                `Error Code: ${error.code} \n Error Message: ${error.message}`,
+                            );
+                        });
+                }
+            });
+        },
+        (error) => {
+            console.log(error);
+        },
+    );
+};
+
+const facebookLogin = async () => {
+    const provider = new firebase.auth.FacebookAuthProvider();
+
+    await fbAuth.signInWithPopup(provider).then(
+        async (result) => {
+            const token = await fbAuth?.currentUser?.getIdToken(true);
+            if (token) {
+                localStorage.setItem('@token', token);
+            }
+        },
+        (error) => {
+            console.log(error);
+        },
+    );
+};
+
 const fbAuth = fb.auth();
-export { fbAuth, firebase };
+export { fbAuth, firebase, googleLogin, facebookLogin };

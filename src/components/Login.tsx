@@ -55,6 +55,17 @@ const Login = () => {
     const classes = useStyles();
     const history = useHistory();
 
+    const passwordSignIn = async (email: string, password: string) => {
+        fbAuth
+            .signInWithEmailAndPassword(email, password)
+            .then((user) => {
+                console.log(user);
+            })
+            .catch((error) => {
+                console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
+            });
+    };
+
     const googleLogin = async () => {
         const provider = new firebase.auth.GoogleAuthProvider();
 

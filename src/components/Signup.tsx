@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
-import { fbAuth, firebase } from '../services/firebase';
+import { fbAuth, googleLogin, facebookLogin } from '../services/firebase';
 import {
     Avatar,
     Button,
@@ -49,38 +49,36 @@ const Signup = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const googleLogin = async () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
+    if (!(localStorage.getItem('@token') === null)) {
+        history.push('/dashboard');
+    }
 
-        await fbAuth.signInWithPopup(provider).then(
-            async (result) => {
-                const token = await fbAuth?.currentUser?.getIdToken(true);
-                if (token) {
-                    localStorage.setItem('@token', token);
-                    history.push('/dashboard');
-                }
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+    });
+
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        passwordSignUp(formData.email, formData.password);
+        localStorage.setItem('@name', `${formData.firstName} ${formData.lastName}`);
+        history.push('/dashboard');
     };
 
-    const facebookLogin = async () => {
-        const provider = new firebase.auth.FacebookAuthProvider();
-
-        await fbAuth.signInWithPopup(provider).then(
-            async (result) => {
-                const token = await fbAuth?.currentUser?.getIdToken(true);
-                if (token) {
-                    localStorage.setItem('@token', token);
-                    history.push('/dashboard');
-                }
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+    const passwordSignUp = async (email: string, password: string) => {
+        fbAuth
+            .createUserWithEmailAndPassword(email, password)
+            .then((user) => {
+                console.log(user);
+            })
+            .catch((error) => {
+                console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
+            });
     };
 
     return (
@@ -94,7 +92,7 @@ const Signup = () => {
                     Create Account
                 </Typography>
                 <Button
-                    onClick={facebookLogin}
+                    onClick={googleLogin}
                     sx={{ margin: '20px 0px 10px 0px' }}
                     type="submit"
                     fullWidth
@@ -105,7 +103,7 @@ const Signup = () => {
                     Sign in with Google
                 </Button>
                 <Button
-                    onClick={googleLogin}
+                    onClick={facebookLogin}
                     type="submit"
                     fullWidth
                     variant="outlined"
@@ -114,7 +112,7 @@ const Signup = () => {
                 >
                     Sign in with Facebook
                 </Button>
-                <form className={classes.form} noValidate>
+                <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
                     <Divider className={classes.submit} textAlign="center">
                         <Typography color="textSecondary">
                             Or Sign up to create your ImmiQ account
@@ -131,6 +129,7 @@ const Signup = () => {
                                 id="firstName"
                                 label="First Name"
                                 autoFocus
+                                onChange={(e) => onChange(e)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -142,6 +141,7 @@ const Signup = () => {
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="lname"
+                                onChange={(e) => onChange(e)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -153,6 +153,7 @@ const Signup = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={(e) => onChange(e)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -165,6 +166,7 @@ const Signup = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={(e) => onChange(e)}
                             />
                         </Grid>
                     </Grid>
