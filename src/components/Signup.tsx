@@ -49,10 +49,6 @@ const Signup = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    if (!(localStorage.getItem('@token') === null)) {
-        history.push('/dashboard');
-    }
-
     const [formData, setFormData] = useState({
         email: '',
         password: '',

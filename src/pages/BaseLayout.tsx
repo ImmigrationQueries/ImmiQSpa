@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+//TODO: Fix layout to not show login and signup when user logged in
+//TODO: Add signout logic
+//Add forgot password logic
+
 const BaseLayout = () => {
     const classes = useStyles();
     return (

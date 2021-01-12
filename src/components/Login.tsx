@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { fbAuth, firebase } from '../services/firebase';
+import { fbAuth, googleLogin, facebookLogin } from '../services/firebase';
 
 import Copyright from '../components/Copyright';
 import { LockOutlined, Facebook, Google } from '@material-ui/icons';
@@ -16,6 +16,8 @@ import {
     Link,
     Typography,
 } from '@material-ui/core';
+
+//TODO: Add password login logic
 
 const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
@@ -51,9 +53,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const performAuthentication = () => {};
+
 const Login = () => {
     const classes = useStyles();
     const history = useHistory();
+
+    if (!(localStorage.getItem('@token') === null)) {
+        history.push('/dashboard');
+    }
 
     const passwordSignIn = async (email: string, password: string) => {
         fbAuth
@@ -64,40 +72,6 @@ const Login = () => {
             .catch((error) => {
                 console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
             });
-    };
-
-    const googleLogin = async () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        await fbAuth.signInWithPopup(provider).then(
-            async (result) => {
-                const token = await fbAuth?.currentUser?.getIdToken(true);
-                if (token) {
-                    localStorage.setItem('@token', token);
-                    history.push('/dashboard');
-                }
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
-    };
-
-    const facebookLogin = async () => {
-        const provider = new firebase.auth.FacebookAuthProvider();
-
-        await fbAuth.signInWithPopup(provider).then(
-            async (result) => {
-                const token = await fbAuth?.currentUser?.getIdToken(true);
-                if (token) {
-                    localStorage.setItem('@token', token);
-                    history.push('/dashboard');
-                }
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
     };
 
     return (
