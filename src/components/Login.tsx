@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { fbAuth, googleLogin, facebookLogin } from '../services/firebase';
+import { googleLogin, facebookLogin, passwordSignIn } from '../services/firebaseAuth';
 
 import Copyright from '../components/Copyright';
 import { LockOutlined, Facebook, Google } from '@material-ui/icons';
@@ -53,25 +53,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const performAuthentication = () => {};
-
 const Login = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    if (!(localStorage.getItem('@token') === null)) {
-        history.push('/dashboard');
-    }
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+    });
 
-    const passwordSignIn = async (email: string, password: string) => {
-        fbAuth
-            .signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                console.log(user);
-            })
-            .catch((error) => {
-                console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
-            });
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        passwordSignIn(formData.email, formData.password);
+        history.push('/dashboard');
     };
 
     return (
@@ -109,7 +106,7 @@ const Login = () => {
                         Log in with Facebook
                     </Button>
 
-                    <form className={classes.form} noValidate>
+                    <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
                         <Divider textAlign="center">
                             <Typography color="textSecondary">
                                 Or Log in using your ImmiQ account
@@ -123,6 +120,7 @@ const Login = () => {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            onChange={(e) => onChange(e)}
                         />
                         <TextField
                             variant="outlined"
@@ -133,6 +131,7 @@ const Login = () => {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => onChange(e)}
                         />
                         <Button
                             sx={{ margin: '20px 0px 10px 0px' }}

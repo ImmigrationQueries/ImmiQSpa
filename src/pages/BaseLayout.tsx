@@ -11,6 +11,38 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const clearLocalStorage = () => {
+    localStorage.clear();
+};
+
+const MenuButtons = () => {
+    if (localStorage.getItem('@token') === null) {
+        return (
+            <Fragment>
+                <Button color="inherit" component={ReactLink} to={'/login'}>
+                    Login
+                </Button>
+                <Button color="inherit" component={ReactLink} to={'/signup'}>
+                    Create Account
+                </Button>
+            </Fragment>
+        );
+    } else {
+        return (
+            <Fragment>
+                <Button
+                    color="inherit"
+                    component={ReactLink}
+                    to={'/login'}
+                    onClick={clearLocalStorage}
+                >
+                    Logout
+                </Button>
+            </Fragment>
+        );
+    }
+};
+
 //TODO: Fix layout to not show login and signup when user logged in
 //TODO: Add signout logic
 //Add forgot password logic
@@ -25,12 +57,7 @@ const BaseLayout = () => {
                     <Typography variant="h6" className={classes.title}>
                         ImmiQ
                     </Typography>
-                    <Button color="inherit" component={ReactLink} to={'/login'}>
-                        Login
-                    </Button>
-                    <Button color="inherit" component={ReactLink} to={'/signup'}>
-                        Create Account
-                    </Button>
+                    <MenuButtons />
                 </Toolbar>
             </AppBar>
         </Fragment>

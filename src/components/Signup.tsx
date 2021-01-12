@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
-import { fbAuth, googleLogin, facebookLogin } from '../services/firebase';
+import { passwordSignUp, googleLogin, facebookLogin } from '../services/firebaseAuth';
 import {
     Avatar,
     Button,
@@ -56,25 +56,15 @@ const Signup = () => {
         lastName: '',
     });
 
+    //TODO: Save user first name last name somewhere for password auth
+
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         passwordSignUp(formData.email, formData.password);
-        localStorage.setItem('@name', `${formData.firstName} ${formData.lastName}`);
         history.push('/dashboard');
-    };
-
-    const passwordSignUp = async (email: string, password: string) => {
-        fbAuth
-            .createUserWithEmailAndPassword(email, password)
-            .then((user) => {
-                console.log(user);
-            })
-            .catch((error) => {
-                console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
-            });
     };
 
     return (

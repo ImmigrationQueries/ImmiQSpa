@@ -23,9 +23,7 @@ const config: Config = {
 
 const fb = firebase.initializeApp(config);
 
-// if (window.location.hostname === 'localhost') {
-//     fb.auth().useEmulator('http://localhost:9099');
-// }
+const fbAuth = fb.auth();
 
 const googleLogin = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -68,5 +66,26 @@ const facebookLogin = async () => {
     );
 };
 
-const fbAuth = fb.auth();
-export { fbAuth, firebase, googleLogin, facebookLogin };
+const passwordSignIn = async (email: string, password: string) => {
+    fbAuth
+        .signInWithEmailAndPassword(email, password)
+        .then((user) => {
+            console.log(user);
+        })
+        .catch((error) => {
+            console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
+        });
+};
+
+const passwordSignUp = async (email: string, password: string) => {
+    fbAuth
+        .createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+            console.log(user);
+        })
+        .catch((error) => {
+            console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
+        });
+};
+
+export { firebase, fbAuth, googleLogin, facebookLogin, passwordSignIn, passwordSignUp };
