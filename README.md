@@ -1,6 +1,6 @@
 # Build Status
 
-| Workflow                     | Status                                                                                                                                        |
+| Build                        | Status                                                                                                                                        |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Build and Deploy to Firebase | ![Build Status](https://github.com/ImmigrationQueries/ImmiQSpa/workflows/Deploy%20to%20Firebase%20Hosting%20on%20merge/badge.svg?branch=main) |
 
