@@ -55,7 +55,7 @@ const BaseLayout = () => {
             <AppBar position="fixed">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        ImmiQ
+                        Bhosdike
                     </Typography>
                     <MenuButtons />
                 </Toolbar>
