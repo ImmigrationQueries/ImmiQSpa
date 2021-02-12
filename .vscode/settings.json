@@ -11,5 +11,6 @@
             "autoFix": true
         }
     ],
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
