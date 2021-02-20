@@ -56,8 +56,11 @@ const facebookLogin = async () => {
     await fbAuth.signInWithPopup(provider).then(
         async (result) => {
             const token = await fbAuth?.currentUser?.getIdToken(true);
+            const credential = result.credential as firebase.auth.OAuthCredential;
             if (token) {
                 localStorage.setItem('@token', token);
+                //TODO:  improve this
+                localStorage.setItem('@fbAccessToken', credential.accessToken!);
             }
         },
         (error) => {

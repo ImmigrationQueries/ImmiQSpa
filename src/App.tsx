@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { UserProvider } from './providers/UserProvider';
 import './App.css';
 
 import BaseLayout from './pages/BaseLayout';
@@ -7,17 +8,16 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './pages/Dashboard';
 
-//TODO: Add logic to redirect to dashboard if user already authenticated
 //TODO: Add forgot password logic
 //TODO: Add verification email logic
-//TODO: Add typesafety
 //TODO: Add husky pre-commit hook
 
 const App = () => {
     return (
         <div className="App">
-            <BrowserRouter>
-                <BaseLayout />
+            <UserProvider>
+                <BrowserRouter>
+                    <BaseLayout />
                     <Switch>
                         <Route path={'/login'}>
                             <Login />
@@ -32,7 +32,8 @@ const App = () => {
                             <Login />
                         </Route>
                     </Switch>
-            </BrowserRouter>
+                </BrowserRouter>
+            </UserProvider>
         </div>
     );
 };
