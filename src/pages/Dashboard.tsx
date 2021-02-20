@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link as ReactLink, Redirect } from 'react-router-dom';
+import { Link as Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -8,7 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { UserAuthContext } from '../providers/UserProvider';
-import { firebase, fbAuth } from '../services/firebaseAuth';
+import { firebase } from '../services/firebaseAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
