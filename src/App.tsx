@@ -6,7 +6,6 @@ import BaseLayout from './pages/BaseLayout';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './pages/Dashboard';
-import { Fade } from '@material-ui/core';
 
 //TODO: Add logic to redirect to dashboard if user already authenticated
 //TODO: Add forgot password logic
@@ -19,7 +18,6 @@ const App = () => {
         <div className="App">
             <BrowserRouter>
                 <BaseLayout />
-                <Fade>
                     <Switch>
                         <Route path={'/login'}>
                             <Login />
@@ -34,7 +32,6 @@ const App = () => {
                             <Login />
                         </Route>
                     </Switch>
-                </Fade>
             </BrowserRouter>
         </div>
     );
