@@ -17,7 +17,6 @@ const App = () => {
         <div className="App">
             <UserProvider>
                 <BrowserRouter>
-                    <BaseLayout />
                     <Switch>
                         <Route path={'/login'}>
                             <Login />
