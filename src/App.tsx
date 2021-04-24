@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { UserProvider } from './providers/UserProvider';
 import './App.css';
 
-import BaseLayout from './pages/BaseLayout';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './pages/Dashboard';

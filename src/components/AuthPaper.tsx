@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { makeStyles, Container } from '@material-ui/core';
 
 import Copyright from '../components/Copyright';
@@ -50,7 +49,7 @@ const AuthPaper = (props: AuthPaperProps) => {
     return (
         <Container sx={{ display: 'flex' }} className={classes.container} maxWidth="xs">
             <div className={classes.paper}>
-                <img src={logo} />
+                <img src={logo} alt="ImmiQ Logo" />
 
                 {props.children}
             </div>
