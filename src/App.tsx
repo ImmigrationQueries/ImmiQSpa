@@ -4,10 +4,8 @@ import { UserProvider } from './providers/UserProvider';
 import './App.css';
 
 import Login from './components/Login';
-import Signup from './components/Signup';
 import Dashboard from './pages/Dashboard';
 
-//TODO: Add forgot password logic
 //TODO: Add verification email logic
 //TODO: Add husky pre-commit hook
 
@@ -19,9 +17,6 @@ const App = () => {
                     <Switch>
                         <Route path={'/login'}>
                             <Login />
-                        </Route>
-                        <Route path={'/signup'}>
-                            <Signup />
                         </Route>
                         <Route path={'/dashboard'}>
                             <Dashboard />

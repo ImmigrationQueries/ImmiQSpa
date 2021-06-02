@@ -1,56 +1,44 @@
-import { Fragment, useState, useContext } from 'react';
-import { Link as ReactLink, Redirect } from 'react-router-dom';
-import { googleLogin, facebookLogin, passwordSignIn } from '../services/firebaseAuth';
+import { Fragment, useContext } from 'react';
+import { Link as Redirect } from 'react-router-dom';
+import { googleLogin, facebookLogin } from '../services/firebaseAuth';
 import { UserAuthContext } from '../providers/UserProvider';
+import { Paper } from '@material-ui/core';
+import { Facebook, Google } from '@material-ui/icons';
+import { makeStyles, Divider, Button, Grid, Link, Typography } from '@material-ui/core';
 
-import { LockOutlined, Facebook, Google } from '@material-ui/icons';
-import {
-    Avatar,
-    makeStyles,
-    Divider,
-    Button,
-    TextField,
-    Grid,
-    Link,
-    Typography,
-} from '@material-ui/core';
-import AuthPaper from './AuthPaper';
-
-//TODO: Add password login logic
+const Copyright = () => {
+    return (
+        <Link color="textSecondary" href="https://immiq.com/">
+            Copyright © ImmiQ 2021
+        </Link>
+    );
+};
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
+    root: {
         height: '100vh',
-        flexDirection: 'column',
+    },
+    logo: { margin: theme.spacing(3, 3), justifyContent: 'center' },
+    image: {
+        backgroundImage: 'url(Login.jpg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: theme.palette.info.light
+            ? theme.palette.grey[50]
+            : theme.palette.grey[900],
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     },
     paper: {
-        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+        margin: theme.spacing(4, 8),
         display: 'flex',
-        justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: theme.spacing(2),
-        borderRadius: '5px',
-        backgroundColor: 'white',
-    },
-    avatar: {
-        margin: theme.spacing(2),
-        backgroundColor: theme.palette.primary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(2),
+        justifyContent: 'space-between',
     },
     button: {
-        margin: theme.spacing(2, 0),
-    },
-    icon: {
-        alignItems: 'left',
-    },
-    space: {
-        margin: theme.spacing(0.5),
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: theme.spacing(5),
     },
 }));
 
@@ -58,107 +46,94 @@ const Login = () => {
     const classes = useStyles();
     const { user } = useContext(UserAuthContext);
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-    });
-
-    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        passwordSignIn(formData.email, formData.password);
-    };
-
     return (
         <Fragment>
             {!!user ? (
                 <Redirect to={{ pathname: '/dashboard' }} />
             ) : (
-                <AuthPaper>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlined color="primary" />
-                    </Avatar>
-                    <Typography component="h1" variant="subtitle1" color="primary" gutterBottom>
-                        To gain access to your Dashboard
-                    </Typography>
-                    <Button
-                        sx={{ margin: '20px 0px 10px 0px' }}
-                        className={classes.button}
-                        onClick={googleLogin}
-                        type="submit"
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Google color="primary" />}
-                        size="medium"
+                <Grid container component="main" className={classes.root}>
+                    <Grid item xs={false} sm={4} md={7} className={classes.image} />
+                    <Grid
+                        container
+                        item
+                        xs={12}
+                        sm={8}
+                        md={5}
+                        component={Paper}
+                        elevation={6}
+                        square
                     >
-                        Log in with Google
-                    </Button>
-                    <Button
-                        className={classes.button}
-                        onClick={facebookLogin}
-                        type="submit"
-                        fullWidth
-                        variant="outlined"
-                        startIcon={<Facebook color="primary" />}
-                        size="medium"
-                    >
-                        Log in with Facebook
-                    </Button>
+                        <div className={classes.paper}>
+                            <Grid container className={classes.logo}>
+                                <img src={'http://localhost:3000/ImmiQ.png'} alt="ImmiQ Logo" />
 
-                    <form className={classes.form} onSubmit={(e) => onSubmit(e)} noValidate>
-                        <Divider textAlign="center">
-                            <Typography color="textSecondary">
-                                Or Log in using your ImmiQ account
-                            </Typography>{' '}
-                        </Divider>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            onChange={(e) => onChange(e)}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            onChange={(e) => onChange(e)}
-                        />
-                        <Button
-                            sx={{ margin: '20px 0px 10px 0px' }}
-                            classes={{ root: classes.button }}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                        >
-                            Log In
-                        </Button>
+                                <Grid item>
+                                    <Typography
+                                        color="primary"
+                                        component="h1"
+                                        variant="h5"
+                                        align="center"
+                                        style={{ margin: 5 }}
+                                    >
+                                        Welcome to <b>ImmiQ</b>
+                                    </Typography>
+                                    <Typography
+                                        color="textSecondary"
+                                        align="center"
+                                        style={{ margin: 10 }}
+                                    >
+                                        Getting you one step closer to making an informed decision
+                                        about your Australian Permanent Residence
+                                    </Typography>
+                                </Grid>
+                                <Grid container item className={classes.button}>
+                                    <Grid item style={{ marginBottom: 5 }}>
+                                        <Button
+                                            color="primary"
+                                            onClick={googleLogin}
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            startIcon={<Google color="secondary" />}
+                                            size="medium"
+                                        >
+                                            Log in with Google
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Divider textAlign="center">
+                                            <Typography color="textSecondary">Or</Typography>
+                                        </Divider>
+                                    </Grid>
+                                    <Grid item style={{ marginTop: 5, marginBottom: 5 }}>
+                                        <Button
+                                            className={classes.button}
+                                            onClick={facebookLogin}
+                                            type="submit"
+                                            fullWidth
+                                            variant="outlined"
+                                            startIcon={<Facebook color="secondary" />}
+                                            size="medium"
+                                        >
+                                            Log in with Facebook
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
 
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
+                            <Grid container justifyContent="center" spacing={4}>
+                                <Grid item>
+                                    <Copyright />
+                                </Grid>
+                                <Grid item>
+                                    <Link color="textSecondary" href="https://immiq.com/">
+                                        Back to ImmiQ Website
+                                    </Link>{' '}
+                                </Grid>
                             </Grid>
-                            <Grid item>
-                                <Link component={ReactLink} to={'/signup'} variant="body2">
-                                    No account yet? Create here
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </AuthPaper>
+                        </div>
+                    </Grid>
+                </Grid>
             )}
         </Fragment>
     );

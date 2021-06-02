@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link as Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { UserAuthContext } from '../providers/UserProvider';
 import { firebase } from '../services/firebaseAuth';
+import BaseLayout from './BaseLayout';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -32,28 +33,31 @@ const Dashboard = () => {
     const { user } = useContext(UserAuthContext);
 
     return user ? (
-        <Container className={classes.container} maxWidth="sm">
-            <Card className={classes.root}>
-                <CardActionArea>
-                    <CardMedia
-                        component="img"
-                        image={getPhotoUrl(user)}
-                        title={user?.displayName!}
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h4" component="h1">
-                            Welcome
-                        </Typography>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {user?.displayName!}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {user.email}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
-        </Container>
+        <Fragment>
+            <BaseLayout />
+            <Container className={classes.container} maxWidth="sm">
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            image={getPhotoUrl(user)}
+                            title={user?.displayName!}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h4" component="h1">
+                                Welcome
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {user?.displayName!}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {user.email}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Container>
+        </Fragment>
     ) : (
         <Redirect to={{ pathname: '/login' }} />
     );

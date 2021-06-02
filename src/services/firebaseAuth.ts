@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
 import 'firebase/auth';
+import firebase from 'firebase/app';
 import config from './firebaseConfig';
 
 const fb = firebase.initializeApp(config);
@@ -9,7 +9,7 @@ const fbAuth = fb.auth();
 const googleLogin = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    await fbAuth.signInWithPopup(provider).then(
+    await fbAuth.signInWithRedirect(provider).then(
         async (result) => {
             fbAuth.onAuthStateChanged((user) => {
                 if (user) {
@@ -50,26 +50,4 @@ const facebookLogin = async () => {
     );
 };
 
-const passwordSignIn = async (email: string, password: string) => {
-    fbAuth
-        .signInWithEmailAndPassword(email, password)
-        .then((user) => {
-            console.log(user);
-        })
-        .catch((error) => {
-            console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
-        });
-};
-
-const passwordSignUp = async (email: string, password: string) => {
-    fbAuth
-        .createUserWithEmailAndPassword(email, password)
-        .then((user) => {
-            console.log(user);
-        })
-        .catch((error) => {
-            console.log(`Error Code: ${error.code} \n Error Message: ${error.message}`);
-        });
-};
-
-export { firebase, fbAuth, googleLogin, facebookLogin, passwordSignIn, passwordSignUp };
+export { firebase, fbAuth, googleLogin, facebookLogin };
