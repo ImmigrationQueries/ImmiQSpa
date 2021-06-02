@@ -1,36 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useContext } from 'react';
+import { Link as Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+import { UserAuthContext } from '../providers/UserProvider';
+import { firebase } from '../services/firebaseAuth';
+import BaseLayout from './BaseLayout';
 
-interface Song {
-    id: number;
-    name: string;
-}
+const useStyles = makeStyles((theme) => ({
+    root: {
+        maxWidth: 500,
+        margin: theme.spacing(7),
+    },
+    container: {
+        marginTop: theme.spacing(5),
+    },
+}));
+const getPhotoUrl = (user: firebase.User): string => {
+    if (user.providerData[0]?.providerId === 'facebook.com') {
+        return `${user.photoURL}?access_token=${localStorage.getItem('@fbAccessToken')}`;
+    } else {
+        return `${user.photoURL!}`;
+    }
+};
 
 const Dashboard = () => {
-    const [songs, setSongs] = useState<Song[]>([]);
+    const classes = useStyles();
+    const { user } = useContext(UserAuthContext);
 
-    useEffect(() => {
-        const loadSongs = async () => {
-            const request = await fetch('http://localhost:3040/songs', {
-                headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('@token'),
-                },
-            });
-
-            const allSongs = await request.json();
-            setSongs(allSongs.songs);
-        };
-        loadSongs();
-    }, []);
-    return (
-        <div className="container">
-            <h1>BookList</h1>
-            {/* map the book list to show book name and image */}
-            {songs.map((song) => (
-                <div key={song.id} className="booklist">
-                    <h3>{song.name}</h3>
-                </div>
-            ))}
-        </div>
+    return user ? (
+        <Fragment>
+            <BaseLayout />
+            <Container className={classes.container} maxWidth="sm">
+                <Card className={classes.root}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            image={getPhotoUrl(user)}
+                            title={user?.displayName!}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h4" component="h1">
+                                Welcome
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="h2">
+                                {user?.displayName!}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                                {user.email}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Container>
+        </Fragment>
+    ) : (
+        <Redirect to={{ pathname: '/login' }} />
     );
 };
 

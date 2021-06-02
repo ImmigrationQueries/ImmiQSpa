@@ -1,6 +1,8 @@
 import { AppBar, Button, CssBaseline, Toolbar, Typography, makeStyles } from '@material-ui/core';
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import { Link as ReactLink } from 'react-router-dom';
+import { fbAuth } from '../services/firebaseAuth';
+import { UserAuthContext } from '../providers/UserProvider';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -12,40 +14,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const clearLocalStorage = () => {
+    fbAuth.signOut();
     localStorage.clear();
 };
 
 const MenuButtons = () => {
-    if (localStorage.getItem('@token') === null) {
-        return (
-            <Fragment>
-                <Button color="inherit" component={ReactLink} to={'/login'}>
-                    Login
-                </Button>
-                <Button color="inherit" component={ReactLink} to={'/signup'}>
-                    Create Account
-                </Button>
-            </Fragment>
-        );
-    } else {
-        return (
-            <Fragment>
-                <Button
-                    color="inherit"
-                    component={ReactLink}
-                    to={'/login'}
-                    onClick={clearLocalStorage}
-                >
-                    Logout
-                </Button>
-            </Fragment>
-        );
-    }
+    const { user } = useContext(UserAuthContext);
+    return !!user ? (
+        <Fragment>
+            <Button color="inherit" component={ReactLink} to={'/login'} onClick={clearLocalStorage}>
+                Logout
+            </Button>
+        </Fragment>
+    ) : (
+        <Fragment>
+            <Button color="inherit" component={ReactLink} to={'/login'}>
+                Login
+            </Button>
+            <Button color="inherit" component={ReactLink} to={'/signup'}>
+                Create Account
+            </Button>
+        </Fragment>
+    );
 };
 
 //TODO: Fix layout to not show login and signup when user logged in
 //TODO: Add signout logic
-//Add forgot password logic
+//TODO: Add forgot password logic
 
 const BaseLayout = () => {
     const classes = useStyles();
@@ -55,7 +50,7 @@ const BaseLayout = () => {
             <AppBar position="fixed">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        Bhosdike
+                        ImmiQ
                     </Typography>
                     <MenuButtons />
                 </Toolbar>
