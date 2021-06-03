@@ -1,8 +1,9 @@
 import { AppBar, Button, CssBaseline, Toolbar, Typography, makeStyles } from '@material-ui/core';
-import { Fragment, useContext } from 'react';
-import { Link as ReactLink } from 'react-router-dom';
-import { fbAuth } from '../services/firebaseAuth';
-import { UserAuthContext } from '../providers/UserProvider';
+import { Fragment } from 'react';
+import { Link as Redirect, useHistory } from 'react-router-dom';
+import { auth } from '../services/firebaseAuth';
+import { useEffect } from 'react';
+import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -12,38 +13,14 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
 }));
-
-const clearLocalStorage = () => {
-    fbAuth.signOut();
-    localStorage.clear();
-};
-
-const MenuButtons = () => {
-    const { user } = useContext(UserAuthContext);
-    return !!user ? (
-        <Fragment>
-            <Button color="inherit" component={ReactLink} to={'/login'} onClick={clearLocalStorage}>
-                Logout
-            </Button>
-        </Fragment>
-    ) : (
-        <Fragment>
-            <Button color="inherit" component={ReactLink} to={'/login'}>
-                Login
-            </Button>
-            <Button color="inherit" component={ReactLink} to={'/signup'}>
-                Create Account
-            </Button>
-        </Fragment>
-    );
-};
-
 //TODO: Fix layout to not show login and signup when user logged in
 //TODO: Add signout logic
 //TODO: Add forgot password logic
 
 const BaseLayout = () => {
     const classes = useStyles();
+    const { user, logout } = useAuth();
+
     return (
         <Fragment>
             <CssBaseline />
@@ -52,7 +29,11 @@ const BaseLayout = () => {
                     <Typography variant="h6" className={classes.title}>
                         ImmiQ
                     </Typography>
-                    <MenuButtons />
+                    <Fragment>
+                        <Button color="inherit" onClick={logout}>
+                            Logout
+                        </Button>
+                    </Fragment>
                 </Toolbar>
             </AppBar>
         </Fragment>

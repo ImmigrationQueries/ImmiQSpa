@@ -1,32 +1,23 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { UserProvider } from './providers/UserProvider';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AuthProvider } from './providers/AuthProvider';
+import Login from './pages/Login';
+import BaseLayout from './pages/BaseLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 
-import Login from './components/Login';
-import Dashboard from './pages/Dashboard';
-
-//TODO: Add verification email logic
 //TODO: Add husky pre-commit hook
 
 const App = () => {
     return (
         <div className="App">
-            <UserProvider>
-                <BrowserRouter>
+            <Router>
+                <AuthProvider>
                     <Switch>
-                        <Route path={'/login'}>
-                            <Login />
-                        </Route>
-                        <Route path={'/dashboard'}>
-                            <Dashboard />
-                        </Route>
-                        <Route path={'/'}>
-                            <Login />
-                        </Route>
+                        <ProtectedRoute exact path="/" component={BaseLayout} />
+                        <Route path="/login" component={Login} />
                     </Switch>
-                </BrowserRouter>
-            </UserProvider>
+                </AuthProvider>
+            </Router>
         </div>
     );
 };
