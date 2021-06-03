@@ -1,5 +1,4 @@
-import { Fragment, useContext, useEffect } from 'react';
-import { Link as Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from '../providers/AuthProvider';
 import { Paper } from '@material-ui/core';
 import { Facebook, Google } from '@material-ui/icons';

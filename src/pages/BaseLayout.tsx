@@ -1,8 +1,5 @@
 import { AppBar, Button, CssBaseline, Toolbar, Typography, makeStyles } from '@material-ui/core';
 import { Fragment } from 'react';
-import { Link as Redirect, useHistory } from 'react-router-dom';
-import { auth } from '../services/firebaseAuth';
-import { useEffect } from 'react';
 import { useAuth } from '../providers/AuthProvider';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BaseLayout = () => {
     const classes = useStyles();
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
 
     return (
         <Fragment>
