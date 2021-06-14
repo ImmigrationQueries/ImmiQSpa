@@ -1,0 +1,48 @@
+/* TODO:  Convert to sass or style components*/
+
+.topbar {
+    width: 100%;
+    height: 50px;
+    background-color: #3f51b5;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.topbarWrapper {
+    height: 100%;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbarIconContainer {
+    position: relative;
+    cursor: pointer;
+    margin-left: 10px;
+    color: #555;
+}
+
+.topRight {
+    display: flex;
+    align-items: center;
+}
+
+.topLeft {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+    width: 80px;
+    cursor: pointer;
+}
+
+.topAvatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
