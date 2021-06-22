@@ -68,7 +68,7 @@ const Login = () => {
             <Grid container item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <div className={classes.paper}>
                     <Grid container className={classes.logo}>
-                        <img src={'http://localhost:3000/ImmiQ.png'} alt="ImmiQ Logo" />
+                        <img src={`${process.env.PUBLIC_URL}/ImmiQ.png`} alt="ImmiQ Logo" />
 
                         <Grid item>
                             <Typography

@@ -13,7 +13,7 @@ const Topbar = () => {
                 <div className="topLeft">
                     {/* eslint-disable-next-line jsx-a11y/alt-text */}
                     <img
-                        src={'http://localhost:3000/ImmiQ.png'}
+                        src={`${process.env.PUBLIC_URL}/ImmiQ.png`}
                         alt="ImmiQ Logo"
                         className="logo"
                     />
